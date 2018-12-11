@@ -82,7 +82,7 @@ abstract class Generator
     {
         $path = config('repository.generator.stubsOverridePath', __DIR__);
 
-        if(!file_exists($path . '/Stubs/' . $this->stub . '.stub')){
+        if (!file_exists($path . '/Stubs/' . $this->stub . '.stub')) {
             $path = __DIR__;
         }
 
@@ -98,9 +98,9 @@ abstract class Generator
     public function getReplacements()
     {
         return [
-            'class'          => $this->getClass(),
-            'namespace'      => $this->getNamespace(),
-            'root_namespace' => $this->getRootNamespace()
+            'class' => $this->getClass(),
+            'namespace' => $this->getNamespace(),
+            'root_namespace' => $this->getRootNamespace(),
         ];
     }
 
@@ -146,7 +146,7 @@ abstract class Generator
     }
 
 
-   /**
+    /**
      * Get application namespace
      *
      * @return string
@@ -209,11 +209,8 @@ abstract class Generator
             case ('interfaces' === $class):
                 $path = config('repository.generator.paths.interfaces', 'Repositories');
                 break;
-            case ('presenters' === $class):
-                $path = config('repository.generator.paths.presenters', 'Presenters');
-                break;
-            case ('transformers' === $class):
-                $path = config('repository.generator.paths.transformers', 'Transformers');
+            case ('resources' === $class || 'resource' === $class):
+                $path = config('repository.generator.paths.resources', 'Http\Resources');
                 break;
             case ('validators' === $class):
                 $path = config('repository.generator.paths.validators', 'Validators');
@@ -321,7 +318,7 @@ abstract class Generator
     /**
      * Get value from options by given key.
      *
-     * @param  string      $key
+     * @param  string $key
      * @param  string|null $default
      *
      * @return string
@@ -339,7 +336,7 @@ abstract class Generator
     /**
      * Helper method for "getOption".
      *
-     * @param  string      $key
+     * @param  string $key
      * @param  string|null $default
      *
      * @return string

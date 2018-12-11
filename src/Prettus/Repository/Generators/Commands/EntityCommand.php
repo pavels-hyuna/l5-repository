@@ -50,14 +50,6 @@ class EntityCommand extends Command
      */
     public function fire()
     {
-
-        if ($this->confirm('Would you like to create a Presenter? [y|N]')) {
-            $this->call('make:presenter', [
-                'name'    => $this->argument('name'),
-                '--force' => $this->option('force'),
-            ]);
-        }
-
         $validator = $this->option('validator');
         if (is_null($validator) && $this->confirm('Would you like to create a Validator? [y|N]')) {
             $validator = 'yes';

@@ -1,4 +1,5 @@
 <?php
+
 namespace Prettus\Repository\Generators;
 
 /**
@@ -6,14 +7,14 @@ namespace Prettus\Repository\Generators;
  * @package Prettus\Repository\Generators
  * @author Anderson Andrade <contato@andersonandra.de>
  */
-class TransformerGenerator extends Generator
+class ResourcesGenerator extends Generator
 {
     /**
      * Get stub name.
      *
      * @var string
      */
-    protected $stub = 'transformer/transformer';
+    protected $stub = 'resources/resources';
 
     /**
      * Get root namespace.
@@ -22,7 +23,8 @@ class TransformerGenerator extends Generator
      */
     public function getRootNamespace()
     {
-        return parent::getRootNamespace() . parent::getConfigGeneratorClassPath($this->getPathConfigNode());
+        return str_replace('/', '\\',
+            parent::getRootNamespace() . parent::getConfigGeneratorClassPath($this->getPathConfigNode()));
     }
 
     /**
@@ -32,7 +34,7 @@ class TransformerGenerator extends Generator
      */
     public function getPathConfigNode()
     {
-        return 'transformers';
+        return 'resources';
     }
 
     /**
@@ -42,7 +44,8 @@ class TransformerGenerator extends Generator
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getName() . 'Transformer.php';
+        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(),
+                true) . '/' . $this->getName() . 'Collection.php';
     }
 
     /**
@@ -63,16 +66,16 @@ class TransformerGenerator extends Generator
     public function getReplacements()
     {
         $modelGenerator = new ModelGenerator([
-            'name' => $this->name
+            'name' => $this->name,
         ]);
         $model = $modelGenerator->getRootNamespace() . '\\' . $modelGenerator->getName();
         $model = str_replace([
             "\\",
-            '/'
+            '/',
         ], '\\', $model);
 
         return array_merge(parent::getReplacements(), [
-            'model' => $model
+            'model' => $model,
         ]);
     }
 }

@@ -1,19 +1,20 @@
 <?php
+
 namespace Prettus\Repository\Generators\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use Prettus\Repository\Generators\FileAlreadyExistsException;
-use Prettus\Repository\Generators\TransformerGenerator;
+use Prettus\Repository\Generators\ResourceGenerator;
+use Prettus\Repository\Generators\ResourcesGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
- * Class TransformerCommand
+ * Class ResourcesCommand
  * @package Prettus\Repository\Generators\Commands
  * @author Anderson Andrade <contato@andersonandra.de>
  */
-class TransformerCommand extends Command
+class ResourcesCommand extends Command
 {
 
     /**
@@ -21,21 +22,21 @@ class TransformerCommand extends Command
      *
      * @var string
      */
-    protected $name = 'make:transformer';
+    protected $name = 'make:resources';
 
     /**
      * The description of command.
      *
      * @var string
      */
-    protected $description = 'Create a new transformer.';
+    protected $description = 'Create a new API resources.';
 
     /**
      * The type of class being generated.
      *
      * @var string
      */
-    protected $type = 'Transformer';
+    protected $type = 'Resources';
 
     /**
      * Execute the command.
@@ -43,7 +44,8 @@ class TransformerCommand extends Command
      * @see fire()
      * @return void
      */
-    public function handle(){
+    public function handle()
+    {
         $this->laravel->call([$this, 'fire'], func_get_args());
     }
 
@@ -55,11 +57,15 @@ class TransformerCommand extends Command
     public function fire()
     {
         try {
-            (new TransformerGenerator([
+            (new ResourceGenerator([
                 'name' => $this->argument('name'),
                 'force' => $this->option('force'),
             ]))->run();
-            $this->info("Transformer created successfully.");
+            (new ResourcesGenerator([
+                'name' => $this->argument('name'),
+                'force' => $this->option('force'),
+            ]))->run();
+            $this->info("Resources created successfully.");
         } catch (FileAlreadyExistsException $e) {
             $this->error($this->type . ' already exists!');
 
@@ -79,8 +85,8 @@ class TransformerCommand extends Command
             [
                 'name',
                 InputArgument::REQUIRED,
-                'The name of model for which the transformer is being generated.',
-                null
+                'The name of model for which the resources is being generated.',
+                null,
             ],
         ];
     }
@@ -98,8 +104,8 @@ class TransformerCommand extends Command
                 'f',
                 InputOption::VALUE_NONE,
                 'Force the creation if file already exists.',
-                null
-            ]
+                null,
+            ],
         ];
     }
 }

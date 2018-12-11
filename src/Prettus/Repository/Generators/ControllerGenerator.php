@@ -43,7 +43,8 @@ class ControllerGenerator extends Generator
      */
     public function getPath()
     {
-        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(), true) . '/' . $this->getControllerName() . 'Controller.php';
+        return $this->getBasePath() . '/' . parent::getConfigGeneratorClassPath($this->getPathConfigNode(),
+                true) . '/' . $this->getControllerName() . 'Controller.php';
     }
 
     /**
@@ -74,7 +75,6 @@ class ControllerGenerator extends Generator
      */
     public function getPluralName()
     {
-
         return str_plural(lcfirst(ucwords($this->getClass())));
     }
 
@@ -85,7 +85,6 @@ class ControllerGenerator extends Generator
      */
     public function getReplacements()
     {
-
         return array_merge(parent::getReplacements(), [
             'controller' => $this->getControllerName(),
             'plural'     => $this->getPluralName(),

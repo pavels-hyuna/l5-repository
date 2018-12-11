@@ -1,0 +1,20 @@
+<?php
+
+$NAMESPACE$
+
+use Illuminate\Http\Resources\Json\ResourceCollection;
+
+/**
+ * Class $CLASS$.
+ *
+ * @package $NAMESPACE$
+ */
+class $CLASS$Collection extends ResourceCollection
+{
+    /**
+     * The resource that this resource collects.
+     *
+     * @var string
+     */
+    public $collects = $CLASS$::class;
+}

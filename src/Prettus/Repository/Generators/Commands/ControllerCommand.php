@@ -1,8 +1,8 @@
 <?php
+
 namespace Prettus\Repository\Generators\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Collection;
 use Prettus\Repository\Generators\ControllerGenerator;
 use Prettus\Repository\Generators\FileAlreadyExistsException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -42,7 +42,7 @@ class ControllerCommand extends Command
      */
     public function __construct()
     {
-        $this->name = ((float) app()->version() >= 5.5  ? 'make:rest-controller' : 'make:resource');
+        $this->name = ((float)app()->version() >= 5.5 ? 'make:rest-controller' : 'make:resource');
         parent::__construct();
     }
 
@@ -52,7 +52,8 @@ class ControllerCommand extends Command
      * @see fire()
      * @return void
      */
-    public function handle(){
+    public function handle()
+    {
         $this->laravel->call([$this, 'fire'], func_get_args());
     }
 
@@ -66,12 +67,17 @@ class ControllerCommand extends Command
         try {
             // Generate create request for controller
             $this->call('make:request', [
-                'name' => $this->argument('name') . 'CreateRequest'
+                'name' => $this->argument('name') . 'CreateRequest',
             ]);
 
             // Generate update request for controller
             $this->call('make:request', [
-                'name' => $this->argument('name') . 'UpdateRequest'
+                'name' => $this->argument('name') . 'UpdateRequest',
+            ]);
+
+            // Generate resources
+            $this->call('make:resources', [
+                'name' => $this->argument('name'),
             ]);
 
             (new ControllerGenerator([
@@ -101,7 +107,7 @@ class ControllerCommand extends Command
                 'name',
                 InputArgument::REQUIRED,
                 'The name of model for which the controller is being generated.',
-                null
+                null,
             ],
         ];
     }
@@ -120,7 +126,7 @@ class ControllerCommand extends Command
                 'f',
                 InputOption::VALUE_NONE,
                 'Force the creation if file already exists.',
-                null
+                null,
             ],
         ];
     }
